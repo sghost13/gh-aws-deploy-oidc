@@ -11,7 +11,7 @@ export class GithubActionsRoleStack extends cdk.Stack {
         super(scope, id, props);
 
         // Create a new IAM role for GitHub Actions to use
-        this.role = new Role(this, 'GithubActionsRole', {
+        this.role = new Role(this, 'GitHubActionsRole', {
             // Specify the principal that can assume this role
             // Use the OIDC provider ARN for GitHub Actions
             assumedBy: new FederatedPrincipal(oidcProviderArn, {

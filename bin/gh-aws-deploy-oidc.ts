@@ -9,16 +9,16 @@ const app = new App();
 
 // Create the OIDC provider stack
 // This stack sets up the OpenID Connect provider for GitHub Actions
-const oidcGithubProviderStack = new GithubOidcProviderStack(app, 'OidcProviderStack');
+const oidcGithubProviderStack = new GithubOidcProviderStack(app, 'GithubOidcProvider');
 
 // Create the GitHub Actions role stack
 // This stack creates an IAM role for GitHub Actions to assume
 // The role assumes the OIDC provider created in the previous stack
-const githubActionsRoleStack = new GithubActionsRoleStack(app, 'GithubActionsRoleStack', oidcGithubProviderStack.oidcGithubProvider.openIdConnectProviderArn);
+const githubActionsRoleStack = new GithubActionsRoleStack(app, 'GithubActionsRole', oidcGithubProviderStack.oidcGithubProvider.openIdConnectProviderArn);
 
 // Create the GitHub Actions policy stack
 // This stack attaches necessary policies to the IAM role created in the previous stack
-new GithubActionsPolicyStack(app, 'GithubActionsPolicyStack', githubActionsRoleStack.role);
+new GithubActionsPolicyStack(app, 'GithubActionsPolicy', githubActionsRoleStack.role);
 
 // Synthesize the CDK app
 // This step generates the CloudFormation templates for the defined stacks
