@@ -49,9 +49,9 @@ export class GithubActionsPolicyStack extends cdk.Stack {
             sid: 'AllowCDKLambdaOperations'
         });
 
-        // Attach policies to the github actions role
-        role.addToPolicy(cdkDeploymentPolicy);
-        role.addToPolicy(ec2OperationsPolicy);
-        role.addToPolicy(lambdaOperationsPolicy);
+        // Attach the above policies to the Github actions role
+        role.addToPrincipalPolicy(cdkDeploymentPolicy);
+        role.addToPrincipalPolicy(ec2OperationsPolicy);
+        role.addToPrincipalPolicy(lambdaOperationsPolicy);
     }
 }
