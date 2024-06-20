@@ -1,21 +1,25 @@
 #!/usr/bin/env node
-import 'source-map-support/register';
-import * as cdk from 'aws-cdk-lib';
-import { GhAwsDeployOidcStack } from '../lib/gh-aws-deploy-oidc-stack';
+import { App } from 'aws-cdk-lib';
+import { GithubOidcProviderStack } from '../lib/github-oidc-provider-stack';
+import { GithubActionsRoleStack } from '../lib/github-actions-role-stack';
+import { GithubActionsPolicyStack } from '../lib/github-actions-policy-stack';
 
-const app = new cdk.App();
-new GhAwsDeployOidcStack(app, 'GhAwsDeployOidcStack', {
-  /* If you don't specify 'env', this stack will be environment-agnostic.
-   * Account/Region-dependent features and context lookups will not work,
-   * but a single synthesized template can be deployed anywhere. */
+// Initialize the CDK application
+const app = new App();
 
-  /* Uncomment the next line to specialize this stack for the AWS Account
-   * and Region that are implied by the current CLI configuration. */
-  // env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
+// Create the OIDC provider stack
+// This stack sets up the OpenID Connect provider for GitHub Actions
+const oidcProviderStack = new GithubOidcProviderStack(app, 'OidcProviderStack');
 
-  /* Uncomment the next line if you know exactly what Account and Region you
-   * want to deploy the stack to. */
-  // env: { account: '123456789012', region: 'us-east-1' },
+// Create the GitHub Actions role stack
+// This stack creates an IAM role for GitHub Actions to assume
+// The role assumes the OIDC provider created in the previous stack
+const githubActionsRoleStack = new GithubActionsRoleStack(app, 'GithubActionsRoleStack', oidcProviderStack.oidcProvider.openIdConnectProviderArn);
 
-  /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
-});
+// Create the GitHub Actions policy stack
+// This stack attaches necessary policies to the IAM role created in the previous stack
+new GithubActionsPolicyStack(app, 'GithubActionsPolicyStack', githubActionsRoleStack.role);
+
+// Synthesize the CDK app
+// This step generates the CloudFormation templates for the defined stacks
+app.synth();
