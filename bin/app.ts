@@ -8,15 +8,15 @@ import { GithubActionsPolicyStack } from '../lib/github-actions-policy-stack';
 const app = new App();
 
 // Create the OIDC provider stack
-// This stack sets up the OpenID Connect provider for GitHub Actions
+// This stack sets up the OpenID Connect provider for Github Actions
 const oidcGithubProviderStack = new GithubOidcProviderStack(app, 'GithubOidcProvider');
 
-// Create the GitHub Actions role stack
-// This stack creates an IAM role for GitHub Actions to assume
+// Create the Github Actions role stack
+// This stack creates an IAM role for Github Actions to assume
 // The role assumes the OIDC provider created in the previous stack
-const githubActionsRoleStack = new GithubActionsRoleStack(app, 'GithubActionsRole', oidcGithubProviderStack.oidcGithubProvider.openIdConnectProviderArn);
+const githubActionsRoleStack = new GithubActionsRoleStack(app, 'GithubActionsRole', oidcGithubProviderStack.GithubOIDCProvider.openIdConnectProviderArn);
 
-// Create the GitHub Actions policy stack
+// Create the Github Actions policy stack
 // This stack attaches necessary policies to the IAM role created in the previous stack
 new GithubActionsPolicyStack(app, 'GithubActionsPolicy', githubActionsRoleStack.role);
 

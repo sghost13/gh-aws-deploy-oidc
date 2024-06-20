@@ -1,6 +1,6 @@
 # AWS + Github Actions with OIDC
 
-This project is a TypeScript-based AWS CDK application that sets up an OpenID Connect (OIDC) provider for GitHub Actions, creates an IAM role for GitHub Actions to assume, and attaches necessary policies to the IAM role.
+This project is a TypeScript-based AWS CDK application that sets up an OpenID Connect (OIDC) provider for Github Actions, creates an IAM role for Github Actions to assume, and attaches necessary policies to the IAM role.
 
 ## Getting Started
 
@@ -41,7 +41,7 @@ npm test
 
 ## Deployment
 
-This project uses GitHub Actions for deployment. The workflow is defined in `.github/workflows/cdk-deploy.yml`. It is triggered manually, on push to the main branch, or on pull requests to the main branch.
+This project uses Github Actions for deployment. The workflow is defined in `.github/workflows/cdk-deploy.yml`. It is triggered manually, on push to the main branch, or on pull requests to the main branch.
 
 ## Built With
 
