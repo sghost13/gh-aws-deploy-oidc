@@ -23,7 +23,7 @@ export class GithubActionsRoleStack extends cdk.Stack {
                             // Only the specific repo and environment will be allowed, using temporary keys with OIDC.
                             // CASE SENSITIVE!
                             // 'repo:<USER/ORG_NAME>/<REPO>:environment:<GITHUB_ENV_NAME>'
-                            'repo:sghost13/sg-aws-github-oidc:environment:dev'
+                            'repo:sghost13/gh-aws-deploy-oidc:environment:dev'
                         ]
                     },
                 },
