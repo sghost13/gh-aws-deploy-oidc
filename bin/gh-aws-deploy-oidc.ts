@@ -9,12 +9,12 @@ const app = new App();
 
 // Create the OIDC provider stack
 // This stack sets up the OpenID Connect provider for GitHub Actions
-const oidcProviderStack = new GithubOidcProviderStack(app, 'OidcProviderStack');
+const oidcGithubProviderStack = new GithubOidcProviderStack(app, 'OidcProviderStack');
 
 // Create the GitHub Actions role stack
 // This stack creates an IAM role for GitHub Actions to assume
 // The role assumes the OIDC provider created in the previous stack
-const githubActionsRoleStack = new GithubActionsRoleStack(app, 'GithubActionsRoleStack', oidcProviderStack.oidcProvider.openIdConnectProviderArn);
+const githubActionsRoleStack = new GithubActionsRoleStack(app, 'GithubActionsRoleStack', oidcGithubProviderStack.oidcGithubProvider.openIdConnectProviderArn);
 
 // Create the GitHub Actions policy stack
 // This stack attaches necessary policies to the IAM role created in the previous stack
