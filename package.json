@@ -2,7 +2,7 @@
   "name": "gh-aws-deploy-oidc",
   "version": "0.1.0",
   "bin": {
-    "gh-aws-deploy-oidc": "bin/gh-aws-deploy-oidc.js"
+    "app": "bin/app.ts"
   },
   "scripts": {
     "build": "tsc",
