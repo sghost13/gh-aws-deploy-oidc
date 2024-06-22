@@ -8,8 +8,6 @@ updates:
       interval: "weekly"
     commit-message:
       prefix: "chore(deps):"
-    labels:
-      - "dependencies"
 
   # Updates versions for npm dependencies
   - package-ecosystem: "npm"
@@ -18,5 +16,3 @@ updates:
       interval: "daily"
     commit-message:
       prefix: "chore(deps):"
-    labels:
-      - "dependencies"
