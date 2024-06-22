@@ -11,7 +11,7 @@ updates:
     labels:
       - "dependencies"
 
-  # Updates versions for cdk dependencies
+  # Updates versions for npm dependencies
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
