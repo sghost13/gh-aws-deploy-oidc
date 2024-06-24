@@ -30,9 +30,9 @@ These instructions will get you a copy of this project up and running in your ow
 
 1. Open the `github-actions-role-stack.ts` file.
 2. Add this codes repository that you created to the `allowedRepositories` array in the `github-actions-role-stack.ts` file.
-   - Use this template: `'repo:USER_OR_ORG_NAME/THIS_PROJECTS_REPO:*'`
+   - Use this template: `'repo:USER_OR_ORG_NAME/THIS_PROJECTS_REPO:environment:*'`
 3. Add any repos you want to allow to be deployed via Github actions, new line for each repo to the `allowedRepositories` array in the `github-actions-role-stack.ts` file.
-   - Use this template: `repo:USER_OR_ORG_NAME/REPO:*'`
+   - Use this template: `repo:USER_OR_ORG_NAME/REPO:environment:*'`
 
 ### Bootstrap the project with CDK
 1. From your local machine, bootstrap the project.
