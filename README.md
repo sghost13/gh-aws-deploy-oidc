@@ -24,7 +24,7 @@ These instructions will get you a copy of this project up and running in your ow
 2. Create secret variables in each Github environment you are deploying too. USE SECRETS, NOT variables.
     - `AWS_ACCOUNT_ID`: The AWS account ID where the CDK application will be deployed. (Your AWS account number)
     - `AWS_REGION`: The AWS region where the CDK application will be deployed. (us-east-1)
-    - `ENVIRONMENT`: The name of the deployment environment. (ie prod, dev, staging, etc)
+    - `ENVIRONMENT`: The name of the deployment environment. Default is main branch is prod. (ie prod, dev, staging, etc)
 
 ### Add Repositories you want to grant deployment permissions to
 
