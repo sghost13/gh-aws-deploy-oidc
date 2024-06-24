@@ -9,18 +9,18 @@ export class GithubActionsPolicyStack extends cdk.Stack {
         // Read the ENVIRONMENT variable from Github Actions Runner
         const environment= process.env.ENVIRONMENT;
 
-        // Example fine grained policy for prod environment
-        const prodPolicy = new PolicyStatement({
-            actions: [
-                "cloudformation:*",
-                "s3:*",
-                "iam:*",
-                "ssm:*"
-            ],
-            resources: ['*'],
-            effect: Effect.ALLOW,
-            sid: 'ProdPolicyGithubActions'
-        })
+        // // Example: fine-grained policy for prod environment
+        // const prodPolicy = new PolicyStatement({
+        //     actions: [
+        //         "cloudformation:*",
+        //         "s3:*",
+        //         "iam:*",
+        //         "ssm:*"
+        //     ],
+        //     resources: ['*'],
+        //     effect: Effect.ALLOW,
+        //     sid: 'ProdPolicyGithubActions'
+        // })
 
         // If ENVIRONMENT variable is not set, add 'AdministratorAccess' policy to role
         // Needed for bootstrapping the environment of each AWS account
@@ -34,10 +34,10 @@ export class GithubActionsPolicyStack extends cdk.Stack {
             role.addManagedPolicy(ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess'));
         }
 
-        // if prod environment, add correct policy to role.
-        if (environment === 'prod') {
-            // Uses the custom prodPolicy set above.
-            role.addToPrincipalPolicy(prodPolicy);
-        }
+        // // Example: if prod environment, used fine-grained prod policy
+        // if (environment === 'prod') {
+        //     // Uses the custom prodPolicy set above.
+        //     role.addToPrincipalPolicy(prodPolicy);
+        //}
     }
 }
