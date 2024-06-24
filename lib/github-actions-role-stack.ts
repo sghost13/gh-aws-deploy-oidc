@@ -20,9 +20,9 @@ export class GithubActionsRoleStack extends cdk.Stack {
                         'token.actions.githubusercontent.com:aud': 'sts.amazonaws.com',
                         'token.actions.githubusercontent.com:sub': [
                             // Sets the Username/Organization, Repo, that AWS will allow to be deployed from.
-                            // Only the specific repo will be allowed, using temporary keys with OIDC.
-                            // 'repo:<USER/ORG_NAME>/<REPO>:environment:dev'
-                            'repo:sghost13/gh-aws-deploy-oidc:*'
+                            // Only the specific repo will be allowed, any Github environment, using temporary keys with OIDC.
+                            // 'repo:<USER/ORG_NAME>/<REPO>:environment:*'
+                            'repo:sghost13/gh-aws-deploy-oidc:environment:*'
                         ]
                     },
                 },

@@ -3,6 +3,7 @@
 This project is a TypeScript-based AWS CDK application that sets up an OpenID Connect (OIDC) provider for Github Actions, creates an IAM role for Github Actions to assume, and attaches necessary policies to the IAM role. This allows for more open permissions for dev deployments, as well as fine-grained for prod if you need it. It follows the recommendations by both AWS and Github for deployment permissions, while automating the process. See Links below for further information.
 - [Use IAM roles to connect GitHub Actions to actions in AWS - AWS Docs](https://aws.amazon.com/blogs/security/use-iam-roles-to-connect-github-actions-to-actions-in-aws/)
 - [Configuring OpenID Connect in Amazon Web Services - Github Docs](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services)
+
 ## Getting Started
 
 These instructions will get you a copy of this project up and running in your own repository.
