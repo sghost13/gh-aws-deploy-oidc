@@ -1,87 +1,54 @@
 # AWS + Github Actions with OIDC
 
-This project is a TypeScript-based AWS CDK application that sets up an OpenID Connect (OIDC) provider for Github Actions, creates an IAM role for Github Actions to assume, and attaches necessary policies to the IAM role.
-
+This project is a TypeScript-based AWS CDK application that sets up an OpenID Connect (OIDC) provider for Github Actions, creates an IAM role for Github Actions to assume, and attaches necessary policies to the IAM role. This allows for more open permissions for dev deployments, as well as fine-grained for prod if you need it. It follows the recommendations by both AWS and Github for deployment permissions, while automating the process. See Links below for further information.
+- [Use IAM roles to connect GitHub Actions to actions in AWS - AWS Docs](https://aws.amazon.com/blogs/security/use-iam-roles-to-connect-github-actions-to-actions-in-aws/)
+- [Configuring OpenID Connect in Amazon Web Services - Github Docs](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services)
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
+These instructions will get you a copy of this project up and running in your own repository.
 
 ### Prerequisites
 
-- Node.js (v18)
-- npm
-- AWS CLI
-- AWS CDK
+- Create a repo for this project.
+- Setup Github environments and secrets in the repo you just created. Use SECRETS, not variables.
+- Add repositories you want to grant deployment permissions to the `github-actions-role-stack.ts` file.
+- Bootstrap the project with cdk deploy --all.
+- Configure the actions workflow to suit your needs. 
+- Add new projects to the `github-actions-role-stack.ts` file as needed.
 
-### Installing
+### Setup Github Environments and Secrets
 
-1. Clone the repository:
+1. Create an environment in your Github repository settings.
+   - Name the environment based on where it is deploying. (ie prod, dev, staging, etc based on your needs.) 
+   - The default is the main branch is prod.
+2. Create secret variables in each Github environment you are deploying too. USE SECRETS, NOT variables.
+    - `AWS_ACCOUNT_ID`: The AWS account ID where the CDK application will be deployed. (Your AWS account number)
+    - `AWS_REGION`: The AWS region where the CDK application will be deployed. (us-east-1)
+    - `ENVIRONMENT`: The name of the deployment environment. (ie prod, dev, staging, etc)
 
-```bash
-git clone <repository-url>
-```
+### Add Repositories you want to grant deployment permissions to
 
-2. Navigate to the project directory:
+1. Open the `github-actions-role-stack.ts` file.
+2. Add this codes repository that you created to the `allowedRepositories` array in the `github-actions-role-stack.ts` file.
+   - Use this template: `'repo:USER_OR_ORG_NAME/THIS_PROJECTS_REPO:*'`
+3. Add any repos you want to allow to be deployed via Github actions, new line for each repo to the `allowedRepositories` array in the `github-actions-role-stack.ts` file.
+   - Use this template: `repo:USER_OR_ORG_NAME/REPO:*'`
 
-```bash
-cd <project-directory>
-```
+### Bootstrap the project with CDK
+1. From your local machine, bootstrap the project.
+   - It needs to exist in AWS so itself has a role to assume from Github actions. Chicken/Egg problem.
+   - Run `cdk deploy --all` from the root of the project.
 
-3. Install the dependencies:
+### Configure the Actions Workflow
+1. Configure the Actions workflow file to suit your needs. 
+   - The workflow is defined in the `.github/workflows/cdk-deploy.yml` file.
+   - You can change the triggers, permissions, jobs, and steps as needed.
 
-```bash
-npm ci
-```
-
-## Running the tests
-
-```bash
-npm test
-```
-
-## Deployment
-
-This project uses Github Actions for deployment. The workflow is defined in `.github/workflows/cdk-deploy.yml`. Before the workflow will work it needs to be bootstrapped from your machine using `cdk deploy --all`, so that it exists in your aws account. After that it should only be ran by your workflow. You will need to configure the following items for it to function correctly:
-
-1. **Github Environment Secrets**: You will need to set the following secrets in your Github repository's settings:
-
-    - `AWS_ACCOUNT_ID`: The AWS account ID where the CDK application will be deployed.
-    - `AWS_REGION`: The AWS region where the CDK application will be deployed.
-
-2. **Workflow triggers**: Any workflow triggers you may need. ie:
-   - `workflow_dispatch`
-   - `push`
-   - `pull_request`.
-
-3. **Add itself to the CDK application**: You will need to add the CDK application to itself. This is done by running `cdk deploy --all` from your local machine. This will create the necessary resources in your AWS account so that it can then be run from that Github Actions Workflow.
-
-4. **Add this repository to the github-actions-role-stack.ts**: You will need to add the repository to the `github-actions-role-stack.ts` file. This is done by adding the repository name to the `allowedRepositories` array. This is to ensure that only the repositories you want to have access to the role can assume it, and is needs to be able to assume it so it itself can run. The template is:`'repo:<USER/ORG_NAME>/<REPO>:environment:<GITHUB_ENV_NAME>'`
-
-## CDK Deployment Workflow Setup
-
-The CDK deployment workflow is defined in the `.github/workflows/cdk-deploy.yml` file. This workflow is responsible for deploying your AWS CDK application using GitHub Actions. Here's a brief explanation of the setup:
-
-1. **Workflow Triggers**: The workflow is triggered manually (`workflow_dispatch`), on push to the main branch, or on pull requests to the main branch.
-
-2. **Permissions**: The workflow requires `id-token: write` permission for requesting the JWT and `contents: read` permission for actions/checkout.
-
-3. **Jobs**: The workflow defines a `deploy` job that runs on the latest Ubuntu runner. This job is associated with the `dev` environment.
-
-4. **Steps**: The `deploy` job consists of several steps:
-
-    - **Checkout Repository**: This step checks out your repository using the `actions/checkout@v4` action.
-
-    - **Setup Node.js**: This step sets up Node.js using the `actions/setup-node@v4` action. The Node.js version used is 18.
-
-    - **Cache Node.js dependencies**: This step caches Node.js dependencies to speed up future workflow runs. It uses the `actions/cache@v4` action.
-
-    - **Install CDK Dependencies**: This step installs the CDK dependencies if they are not found in the cache. It runs `npm ci` in the root directory of your project.
-
-    - **Configure AWS Creds**: This step configures AWS credentials using the `aws-actions/configure-aws-credentials@v4` action. It assumes a role with the ARN `arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GithubActions` and sets the AWS region to the value of the `AWS_REGION` secret.
-
-    - **Deploy CDK**: This step deploys your CDK application using the `npx cdk deploy --all --require-approval never` command.
-
-Please ensure that you have the necessary secrets (`AWS_ACCOUNT_ID` and `AWS_REGION`) set in your GitHub repository's secrets settings.
+### Add new projects to the `github-actions-role-stack.ts` file as needed
+1. Add new Repos and projects to the `github-actions-role-stack.ts` file as needed.
+   - Use the same template as above to add new repositories to the `allowedRepositories` array.
+   - This project will automatically deploy by Github actions, giving the new repo permissions to deploy.
+   - This project and the new project will use Temporary Keys, and OIDC between Github and AWS to deploy.
 
 ## Built With
 
