@@ -22,7 +22,7 @@ export class GithubActionsRoleStack extends cdk.Stack {
                             // Sets the Username/Organization, Repo, that AWS will allow to be deployed from.
                             // Only the specific repo will be allowed, using temporary keys with OIDC.
                             // 'repo:<USER/ORG_NAME>/<REPO>:*'
-                            'repo:sghost13/gh-aws-deploy-oidc*'
+                            'repo:sghost13/gh-aws-deploy-oidc:environment:*'
                         ]
                     },
                 },
