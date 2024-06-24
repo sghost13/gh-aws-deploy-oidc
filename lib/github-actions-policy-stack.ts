@@ -24,7 +24,7 @@ export class GithubActionsPolicyStack extends cdk.Stack {
 
         // If ENVIRONMENT variable is not set, add 'AdministratorAccess' policy to role
         // Needed for bootstrapping the environment of each AWS account
-        if (!environment) {
+        if (!process.env.ENVIRONMENT) {
             role.addManagedPolicy(ManagedPolicy.fromAwsManagedPolicyName('AdministratorAccess'));
         }
 
