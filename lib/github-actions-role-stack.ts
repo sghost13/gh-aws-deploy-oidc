@@ -15,15 +15,14 @@ export class GithubActionsRoleStack extends cdk.Stack {
             // Specify the principal that can assume this role
             // Use the OIDC provider ARN for Github Actions
             assumedBy: new FederatedPrincipal(oidcProviderArn, {
-                    StringEquals: {
+                    StringEqualsIgnoreCase: {
                         // Conditions for the OIDC provider
                         'token.actions.githubusercontent.com:aud': 'sts.amazonaws.com',
                         'token.actions.githubusercontent.com:sub': [
-                            // Sets the Username/Organization, Repo, and Github environments that AWS will allow to be deployed from.
-                            // Only the specific repo and environment will be allowed, using temporary keys with OIDC.
-                            // CASE SENSITIVE!
-                            // 'repo:<USER/ORG_NAME>/<REPO>:environment:<GITHUB_ENV_NAME>'
-                            'repo:sghost13/gh-aws-deploy-oidc:environment:dev'
+                            // Sets the Username/Organization, Repo, that AWS will allow to be deployed from.
+                            // Only the specific repo will be allowed, using temporary keys with OIDC.
+                            // 'repo:<USER/ORG_NAME>/<REPO>:*'
+                            'repo:sghost13/gh-aws-deploy-oidc:*'
                         ]
                     },
                 },
