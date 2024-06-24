@@ -36,7 +36,7 @@ These instructions will get you a copy of this project up and running in your ow
 
 ### Bootstrap the project with CDK
 1. From your local machine, bootstrap the project.
-   - It needs to exist in AWS so itself has a role to assume from Github actions. Chicken/Egg problem.
+   - It needs to exist in AWS so itself has a role to assume from Github actions.
    - Run `cdk deploy --all` from the root of the project.
 
 ### Configure the Actions Workflow
