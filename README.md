@@ -8,24 +8,24 @@ This project is a TypeScript-based AWS CDK application that sets up an OpenID Co
 
 These instructions will get you a copy of this project up and running in your own repository.
 
-### Prerequisites
+## Prerequisites
 
 - Create a repo for this project.
 - Setup Github environments and secrets in the repo you just created. Use SECRETS, not variables.
 - Add repositories you want to grant deployment permissions to the `github-actions-role-stack.ts` file.
 - Bootstrap the project with cdk deploy --all.
-- Configure the actions workflow to suit your needs. 
+- Configure the actions workflow to suit your needs.
 - Add new projects to the `github-actions-role-stack.ts` file as needed.
 
 ### Setup Github Environments and Secrets
 
 1. Create an environment in your Github repository settings.
-   - Name the environment based on where it is deploying. (ie prod, dev, staging, etc based on your needs.) 
+   - Name the environment based on where it is deploying. (ie prod, dev, staging, etc based on your needs.)
    - The default is the main branch is prod.
 2. Create secret variables in each Github environment you are deploying too. USE SECRETS, NOT variables.
-    - `AWS_ACCOUNT_ID`: The AWS account ID where the CDK application will be deployed. (Your AWS account number)
-    - `AWS_REGION`: The AWS region where the CDK application will be deployed. (us-east-1)
-    - `ENVIRONMENT`: The name of the deployment environment. Default is main branch is prod. (ie prod, dev, staging, etc)
+   - `AWS_ACCOUNT_ID`: The AWS account ID where the CDK application will be deployed. (Your AWS account number)
+   - `AWS_REGION`: The AWS region where the CDK application will be deployed. (us-east-1)
+   - `ENVIRONMENT`: The name of the deployment environment. Default is main branch is prod. (ie prod, dev, staging, etc)
 
 ### Add Repositories you want to grant deployment permissions to
 
@@ -41,7 +41,7 @@ These instructions will get you a copy of this project up and running in your ow
    - Run `cdk deploy --all` from the root of the project.
 
 ### Configure the Actions Workflow
-1. Configure the Actions workflow file to suit your needs. 
+1. Configure the Actions workflow file to suit your needs.
    - The workflow is defined in the `.github/workflows/cdk-deploy.yml` file.
    - You can change the triggers, permissions, jobs, and steps as needed.
 
