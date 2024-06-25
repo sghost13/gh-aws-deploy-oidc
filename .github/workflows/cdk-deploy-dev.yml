@@ -6,6 +6,8 @@ on:
     branches:
       - main
   pull_request:
+    types:
+      - closed
     branches:
       - main
 
@@ -14,7 +16,8 @@ permissions:
   contents: read # This is required for actions/checkout
 
 jobs:
-  deploy:
+  if_merged:
+    if: github.event.pull_request.mergerd == true
     runs-on: ubuntu-latest
     environment: dev
 
