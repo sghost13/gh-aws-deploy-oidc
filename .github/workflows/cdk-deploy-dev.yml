@@ -1,4 +1,4 @@
-name: Manually Deploy a CDK stack with OIDC
+name: Deploy a CDK stack to dev env with OIDC
 
 on:
   workflow_dispatch:
