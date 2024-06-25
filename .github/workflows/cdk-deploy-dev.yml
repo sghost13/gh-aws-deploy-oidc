@@ -16,6 +16,7 @@ permissions:
   contents: read # This is required for actions/checkout
 
 jobs:
+  # only run if merged pulled request
   if_merged:
     if: github.event.pull_request.mergerd == true
 #  deploy:
