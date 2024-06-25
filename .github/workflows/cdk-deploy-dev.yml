@@ -18,7 +18,7 @@ permissions:
 jobs:
   # only run if merged pulled request
   if_merged:
-    if: github.event.pull_request.mergerd == true
+    if: github.event.pull_request.merged == true
 #  deploy:
     runs-on: ubuntu-latest
     environment: dev
