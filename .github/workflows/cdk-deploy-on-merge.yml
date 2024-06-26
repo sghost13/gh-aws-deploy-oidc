@@ -19,9 +19,10 @@ jobs:
   # Only run if a pull request is merged
   if_merged:
     if: github.event.pull_request.merged == true
-    # Run for every environment listed
+    # Run job for every environment listed in arrary
     strategy:
       matrix:
+        # The comma separated array
         env: [dev]
     runs-on: ubuntu-latest
     environment: ${{ matrix.env }}
