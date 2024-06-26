@@ -31,7 +31,7 @@ jobs:
 
     environment: ${{ github.event.inputs.environment || matrix.env }}
 
-    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'  && contains('["sghost13"]', github.actor)
+    if: github.event.pull_request.merged == true || ( github.event_name == 'workflow_dispatch'  && contains('["sghost13"]', github.actor) )
 
     steps:
       - name: Checkout Repository
