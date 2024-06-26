@@ -2,9 +2,15 @@ name: Deploy a CDK stack to dev env with OIDC
 
 on:
   workflow_dispatch:
-  #  push:
-  #    branches:
-  #      - main
+    inputs:
+      environment:
+        description: "AWS environment to deploy to"
+        type: choice
+        required: true
+        default: "dev"
+        options:
+          - dev
+
   pull_request:
     types:
       - closed
@@ -12,19 +18,20 @@ on:
       - main
 
 permissions:
-  id-token: write # This is required for requesting the JWT
-  contents: read # This is required for actions/checkout
+  id-token: write
+  contents: read
 
 jobs:
-  # Only run if a pull request is merged
-  if_merged:
-    if: github.event.pull_request.merged == true
-    # Run for every environment listed
+  deploy:
+    runs-on: ubuntu-latest
+
     strategy:
       matrix:
         env: [dev]
-    runs-on: ubuntu-latest
-    environment: ${{ matrix.env }}
+
+    environment: ${{ github.event.inputs.environment || matrix.env }}
+
+    if: github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch'
 
     steps:
       - name: Checkout Repository
