@@ -2,9 +2,9 @@ name: Deploy a CDK stack to dev env with OIDC
 
 on:
   workflow_dispatch:
-#  push:
-#    branches:
-#      - main
+  #  push:
+  #    branches:
+  #      - main
   pull_request:
     types:
       - closed
@@ -16,12 +16,15 @@ permissions:
   contents: read # This is required for actions/checkout
 
 jobs:
-  # only run if merged pulled request
+  # Only run if a pull request is merged
   if_merged:
     if: github.event.pull_request.merged == true
-#  deploy:
+    # Run for every environment listed
+    strategy:
+      matrix:
+        env: [dev]
     runs-on: ubuntu-latest
-    environment: dev
+    environment: ${{ matrix.env }}
 
     steps:
       - name: Checkout Repository
