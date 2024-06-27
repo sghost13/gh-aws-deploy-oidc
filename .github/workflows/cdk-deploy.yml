@@ -61,7 +61,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Deploy CDK
-        env:
-          ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
+        # env:
+        #   ENVIRONMENT: ${{ secrets.ENVIRONMENT }}
         run: |
           npx cdk deploy --all --require-approval never
