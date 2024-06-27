@@ -62,6 +62,6 @@ jobs:
 
       - name: Deploy CDK
         env:
-          ENVIRONMENT: ${{ github.event.inputs.environment || matrix.env }}
+          environment: ${{ github.event.inputs.environment || matrix.env }}
         run: |
           npx cdk deploy --all --require-approval never
