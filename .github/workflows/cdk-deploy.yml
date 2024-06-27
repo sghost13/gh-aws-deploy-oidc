@@ -29,7 +29,7 @@ jobs:
       matrix:
         env: [dev]
 
-    # environment: ${{ github.event.inputs.environment || matrix.env }}
+    environment: ${{ github.event.inputs.environment || matrix.env }}
 
     if: github.event.pull_request.merged == true || ( github.event_name == 'workflow_dispatch' && contains('["sghost13"]', github.actor) )
 
@@ -61,7 +61,5 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Deploy CDK
-        env:
-          environment: ${{ github.event.inputs.environment || matrix.env }}
         run: |
           npx cdk deploy --all --require-approval never
