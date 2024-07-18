@@ -16,10 +16,16 @@ on:
       - closed
     branches:
       - main
+    paths:
+      - 'lib/**'
+      - 'bin/**'
 
 permissions:
   id-token: write
   contents: read
+
+# concurrency:
+#   cancel-in-progress: true
 
 jobs:
   deploy:
